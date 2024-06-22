@@ -1,6 +1,8 @@
 import { Input } from '@/elements';
 import styles from './RegistrationForm.module.scss'; 
 import { useState } from 'react';
+import Link from 'next/link';
+import cn from 'classnames';
 
 export const RegistrationForm = () => {
     const [username, setUsername] = useState<string>("");
@@ -30,6 +32,17 @@ export const RegistrationForm = () => {
                     type='password'
                     onChange={setPassword}
                 />
+            </div>
+            <div className={styles.btnWrapper}>
+                <button 
+                    className={styles.btn} 
+                    disabled={username && password && email ? false : true}
+                >
+                    Регистрация
+                </button>
+            </div>
+            <div className={styles.loginWrapper}>
+                <Link href="/login" className={cn(styles.btn, styles.login)}>Авторизоваться</Link>
             </div>
         </div>
     )
