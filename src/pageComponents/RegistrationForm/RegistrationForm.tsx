@@ -6,13 +6,15 @@ import cn from 'classnames';
 import { registrationUser } from '@/api';
 import { useRouter } from 'next/router';
 import { SmallInfoPopup } from '@/components';
+import { AnimatePresence } from 'framer-motion';
 
 export const RegistrationForm = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [error, setError] = useState<string>("");
-    const [info, setInfo] = useState<boolean>(true);
+    const [info, setInfo] = useState<boolean>(false);
+    const [successRegistration, setSuccessRegistration] = useState<boolean>(true);
     const router = useRouter();
 
 
@@ -22,10 +24,16 @@ export const RegistrationForm = () => {
         };
 
         const result: boolean | { message: string } = await registrationUser(username, email, password);
+        setInfo(true);
+        setTimeout(() => {
+            setInfo(false);
+        }, 1500);
         if (result === true) {
-            setInfo(true);
+            setSuccessRegistration(true);
+            return true
             return router.push('/');
         } else if (typeof result === 'object' && 'message' in result) {
+            setSuccessRegistration(false);
             setError(result.message);
         } else {
             setError("An unknown error occurred.");
@@ -34,7 +42,14 @@ export const RegistrationForm = () => {
 
     return (
         <div className={styles.formWrapper}>
-            {info && <SmallInfoPopup success={true} message={"Успешный логин"} />}
+            <AnimatePresence>
+                {info && 
+                    <SmallInfoPopup 
+                        success={successRegistration} 
+                        message={successRegistration ? "Успешный логин" : "Ошибка при регистрации"} 
+                    />
+                }
+            </AnimatePresence>
             <div className={styles.titleWrapper}>
                 Cloud storage
             </div>
@@ -58,7 +73,7 @@ export const RegistrationForm = () => {
                     onChange={setPassword}
                 />
                 {error && (
-                    <div>{error}</div>
+                    <div className={styles.error}>{error}</div>
                 )}
             </div>
             <div className={styles.btnWrapper}>
