@@ -5,12 +5,14 @@ import Link from 'next/link';
 import cn from 'classnames';
 import { registrationUser } from '@/api';
 import { useRouter } from 'next/router';
+import { SmallInfoPopup } from '@/components';
 
 export const RegistrationForm = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [error, setError] = useState<string>("");
+    const [info, setInfo] = useState<boolean>(true);
     const router = useRouter();
 
 
@@ -21,6 +23,7 @@ export const RegistrationForm = () => {
 
         const result: boolean | { message: string } = await registrationUser(username, email, password);
         if (result === true) {
+            setInfo(true);
             return router.push('/');
         } else if (typeof result === 'object' && 'message' in result) {
             setError(result.message);
@@ -31,6 +34,7 @@ export const RegistrationForm = () => {
 
     return (
         <div className={styles.formWrapper}>
+            {info && <SmallInfoPopup success={true} message={"Успешный логин"} />}
             <div className={styles.titleWrapper}>
                 Cloud storage
             </div>
