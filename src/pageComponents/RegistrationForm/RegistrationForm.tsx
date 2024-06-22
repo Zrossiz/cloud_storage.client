@@ -3,11 +3,32 @@ import styles from './RegistrationForm.module.scss';
 import { useState } from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
+import { registrationUser } from '@/api';
+import { useRouter } from 'next/router';
 
 export const RegistrationForm = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [error, setError] = useState<string>("");
+    const router = useRouter();
+
+
+    const registration = async () => {
+        if (error) {
+            setError("");
+        };
+
+        const result: boolean | { message: string } = await registrationUser(username, email, password);
+        if (result === true) {
+            return router.push('/');
+        } else if (typeof result === 'object' && 'message' in result) {
+            setError(result.message);
+        } else {
+            setError("An unknown error occurred.");
+        };
+    }
+
     return (
         <div className={styles.formWrapper}>
             <div className={styles.titleWrapper}>
@@ -32,9 +53,13 @@ export const RegistrationForm = () => {
                     type='password'
                     onChange={setPassword}
                 />
+                {error && (
+                    <div>{error}</div>
+                )}
             </div>
             <div className={styles.btnWrapper}>
-                <button 
+                <button
+                    onClick={registration}
                     className={styles.btn} 
                     disabled={username && password && email ? false : true}
                 >
