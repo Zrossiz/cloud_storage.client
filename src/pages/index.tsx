@@ -1,12 +1,15 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import { MainSection } from '@/pageComponents';
+import styles from '../styles/Home.module.scss';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+const Home = () => {
   return (
-    <div>index</div>
+    <div className={styles.pageWrapper}>
+      <div className={styles.contentWrapper}>
+        <MainSection />
+      </div>
+    </div>
   );
 }
+
+
+export default Home;
