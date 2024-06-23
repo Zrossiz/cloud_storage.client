@@ -4,6 +4,29 @@
     height: 100%;
 
     .sidebar {
-        width: 20%;
+        min-width: 20%;
+    }
+
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 40px;
+        overflow-y: auto;
+        max-height: 100%;
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
+            height: 150px;
+            text-decoration: none;
+
+            .name {
+                margin-top: 20px;
+                color: black;
+            }
+        }
     }
 }
