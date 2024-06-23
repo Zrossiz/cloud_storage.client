@@ -11,7 +11,7 @@ export const getFilesByPath = async (path: string = "/", cookies?: string): Prom
         headers.Cookie = cookies;
       }
   
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}file/get/`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}file/get/?path=${path}`, {
         withCredentials: true,
         headers
       });

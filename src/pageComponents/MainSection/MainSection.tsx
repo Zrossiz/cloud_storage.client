@@ -7,6 +7,7 @@ import { IFileObj } from '@/types';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { ToBackPage } from '@/elements';
 
 export const MainSection = ({ files }: MainSectionProps) => {
     const [filesState, setFilesState] = useState<IFileObj[]>([]);
@@ -14,11 +15,14 @@ export const MainSection = ({ files }: MainSectionProps) => {
     const router = useRouter();
     useEffect(() => {
         if (Array.isArray(files)) {
-            setFilesState(files);
+            return setFilesState(files);
         } else if (files && 'message' in files && files.message === 'Unauthorized') {
             router.push('/login');
         } else {
             setInfo(true);
+            setTimeout(() => {
+                setInfo(false)
+            }, 1500);
         }
     }, [files, router]);
     return (
@@ -30,11 +34,16 @@ export const MainSection = ({ files }: MainSectionProps) => {
                 <Sidebar />
             </div>
             <div className={styles.content}>
-                {filesState.map((item) => {
-                    return (
-                        <ObjectItem obj={item} />
-                    );
-                })}
+                <div className={styles.backPageWrapper}>
+                    <ToBackPage router={router} />
+                </div>
+                <div className={styles.listWrapper}>
+                    {filesState.map((item) => {
+                        return (
+                            <ObjectItem obj={item} />
+                        );
+                    })}
+                </div>
             </div>
         </div>
     )

@@ -13,7 +13,7 @@ export const ObjectItem = ({ obj }: ObjectItemProps) => {
                 height={100}
                 alt={obj.name}  
             />
-            <div className={styles.name}>{obj.name}</div>  
+            <div className={styles.name}>{obj.name.replace(/\//g, '')}</div>  
         </Link>
     )
 }
