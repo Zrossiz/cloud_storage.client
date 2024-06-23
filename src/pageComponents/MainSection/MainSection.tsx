@@ -1,4 +1,4 @@
-import { Sidebar, SmallInfoPopup } from '@/components';
+import { ObjectItem, Sidebar, SmallInfoPopup } from '@/components';
 import styles from './MainSection.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -32,15 +32,7 @@ export const MainSection = ({ files }: MainSectionProps) => {
             <div className={styles.content}>
                 {filesState.map((item) => {
                     return (
-                        <Link href="/" className={styles.item}>
-                            <Image 
-                                src={item.type === 'folder' ? '/Folder.svg' : '/Document.svg'} 
-                                width={106}
-                                height={100}
-                                alt={item.name}  
-                            />
-                            <div className={styles.name}>{item.name}</div>  
-                        </Link>
+                        <ObjectItem obj={item} />
                     );
                 })}
             </div>

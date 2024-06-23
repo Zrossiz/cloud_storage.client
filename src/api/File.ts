@@ -8,7 +8,7 @@ export const getFilesByPath = async (path: string = "/", cookies?: string): Prom
   
       const headers: Record<string, string> = {};
       if (cookies) {
-        headers.Cookie = cookies; // Добавляем куки в заголовок запроса
+        headers.Cookie = cookies;
       }
   
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}file/get/`, {
@@ -16,7 +16,7 @@ export const getFilesByPath = async (path: string = "/", cookies?: string): Prom
         headers
       });
   
-      return response.data;
+      return response.data.data;
     } catch (err: any) {
       console.error("Error: ", err);
       if (err.response && err.response.status === 401) {
