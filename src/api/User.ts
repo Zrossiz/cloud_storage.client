@@ -25,3 +25,21 @@ export const registrationUser = async (
         }
     }
 }
+
+export const loginUser = async (
+    name: string, password: string
+): Promise<boolean | { message: string }> => {
+    try {
+        const loginResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/login/`, {
+            name,
+            password
+        });
+
+        return true;
+    } catch (err: any) {
+        console.log(err);
+        return {
+            message: String(err.response.data.error)
+        }
+    }
+}
