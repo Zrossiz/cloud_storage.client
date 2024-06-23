@@ -10,6 +10,8 @@ export const registrationUser = async (
             name,
             email, 
             password
+        }, {
+            withCredentials: true
         });
         if (userResponse.status === 201) {
             return true;
@@ -21,7 +23,7 @@ export const registrationUser = async (
     } catch (err: any) {
         console.log(err);
         return {
-            message: String(err.response.data.error)
+            message: "Internal"
         }
     }
 }
@@ -33,13 +35,14 @@ export const loginUser = async (
         const loginResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/login/`, {
             name,
             password
+        }, {
+            withCredentials: true
         });
-
         return true;
     } catch (err: any) {
         console.log(err);
         return {
-            message: String(err.response.data.error)
+            message: "Internal"
         }
     }
 }

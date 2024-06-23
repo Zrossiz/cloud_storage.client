@@ -9,8 +9,8 @@ import cn from 'classnames';
 import { loginUser } from '@/api';
 
 export const LoginForm = () => {
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [username, setUsername] = useState<string>("testlast");
+    const [password, setPassword] = useState<string>("password12");
     const [error, setError] = useState<string>("");
     const [info, setInfo] = useState<boolean>(false);
     const [successRegistration, setSuccessRegistration] = useState<boolean>(true);
