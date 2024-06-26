@@ -45,3 +45,24 @@ export const uploadFile = async (path: string = "/", file: File): Promise<IFileO
     return { message: "Internal server error" };
   }
 }
+
+export const createFolder = async (path: string = "/", name: string): Promise<{ success: boolean } | { message: string }> => {
+  try {
+    const formData = new FormData();
+    formData.append("path", path + name);
+
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}file/create-folder/`, formData, {
+      withCredentials: true
+    });
+
+    return {
+      success: true
+    }
+  } catch (err: any) {
+    console.error("Error: ", err);
+    if (err.response && err.response.status === 401) {
+      return { message: "Unauthorized" };
+    }
+    return { message: "Internal server error" };
+  }
+}
